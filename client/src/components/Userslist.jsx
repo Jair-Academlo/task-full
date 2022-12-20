@@ -1,21 +1,38 @@
 import React from 'react';
-import axios from 'axios';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { setUsers } from '../store/slice/task.slice';
+import { Table } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { usersThunk } from '../store/slice/users.slice';
 
 const Userslist = () => {
+	const users = useSelector(state => state.users);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		axios
-			.get(`http://localhost:4100/api/v1/users/`)
-			.then(res => dispatch(setUsers(res.data.users)));
+		dispatch(usersThunk());
 	}, []);
+
 	return (
-		<div>
-			<h1>task list</h1>
-		</div>
+		<Table striped bordered hover variant='dark'>
+			<thead>
+				<tr>
+					<th>#</th>
+					<th> Name</th>
+					<th>Email</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				{users.map(user => (
+					<tr key={user.id}>
+						<td>{user.id}</td>
+						<td>{user.name}</td>
+						<td>{user.email}</td>
+						<td>{user.status}</td>
+					</tr>
+				))}
+			</tbody>
+		</Table>
 	);
 };
 

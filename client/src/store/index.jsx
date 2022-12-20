@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import usersSlice from './slice/task.slice';
+import isLoadingSlice from './slice/isLoading.slice';
+import usersSlice from './slice/users.slice';
 
 export default configureStore({
 	reducer: {
 		users: usersSlice,
+		isLoading: isLoadingSlice,
 	},
 });
