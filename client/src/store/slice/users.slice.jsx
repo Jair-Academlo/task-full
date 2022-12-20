@@ -20,6 +20,13 @@ export const usersThunk = () => dispatch => {
 		.then(res => dispatch(setUsers(res.data.users)))
 		.finally(() => dispatch(setIsLoading(false)));
 };
+export const addUsersThunk = data => dispatch => {
+	dispatch(setIsLoading(true));
+	axios
+		.post(`http://localhost:4100/api/v1/users/`, data)
+		.then(() => dispatch(usersThunk()))
+		.finally(() => dispatch(setIsLoading(false)));
+};
 
 export const { setUsers } = usersSlice.actions;
 
